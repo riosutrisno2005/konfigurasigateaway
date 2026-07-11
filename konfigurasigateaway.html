@@ -296,7 +296,7 @@ iptables --A INPUT --p tcp --j LOG --log-prefix "INPUT Packets"</pre>
   <p>Pada mesin Linux, untuk membangun NAT dapat dilakukan dengan menggunakan iptables (Netfilter). Dimana pada iptables memiliki tabel yang mengatur NAT. Pada tabel NAT, terdiri dari 3 chain (dapat dilihat pada gambar berikut) yaitu:</p>
 
   <figure>
-    <img src="media/image1.jpeg" alt="Tabel NAT chain" style="width:auto; max-width:400px;">
+    <img src="0kg.png" alt="Tabel NAT chain" style="width:auto; max-width:400px;">
     <figcaption>Gambar chain NAT: PREROUTING, POSTROUTING, FORWARD</figcaption>
   </figure>
 
@@ -322,7 +322,7 @@ iptables --A INPUT --p tcp --j LOG --log-prefix "INPUT Packets"</pre>
   <p>Berdasarkan topologi di bawah ini, akan dilakukan konfigurasi internet gateway/iptables pada server Linux Debian 7.0. Sebelum langkah ini dilakukan, konfigurasi alamat jaringan dan beberapa layanan administrasi sistem jaringan lain seperti DHCP server, FTP server maupun DNS server yang diperlukan dalam konfigurasi server untuk dapat diakses oleh client diharapkan telah dilakukan.</p>
 
   <figure>
-    <img src="media/image2.png" alt="Topologi jaringan Debian Gateway" style="max-width:500px;">
+    <img src="1kg.png" alt="Topologi jaringan Debian Gateway" style="max-width:500px;">
     <figcaption>Topologi Internet Gateway</figcaption>
   </figure>
 
@@ -333,71 +333,71 @@ iptables --A INPUT --p tcp --j LOG --log-prefix "INPUT Packets"</pre>
     <li>Login sebagai root</li>
     <li>
       <figure>
-        <img src="media/image3.png" alt="edit sysctl.conf" style="max-width:400px;">
+        <img src="2kg.png" alt="edit sysctl.conf" style="max-width:400px;">
         <figcaption>Lakukan konfigurasi nat terlebih dahulu dengan mengedit file "sysctl.conf"</figcaption>
       </figure>
     </li>
     <li>
       <figure>
-        <img src="media/image4.png" alt="sysctl.conf hilangkan pagar" style="max-width:600px;">
+        <img src="3kg.png" alt="sysctl.conf hilangkan pagar" style="max-width:600px;">
         <figcaption>Hilangkan tanda pagar pada baris net.ipv4.ip_forward=1</figcaption>
       </figure>
     </li>
     <li>
       <figure>
-        <img src="media/image5.png" alt="masuk ke /proc" style="max-width:350px;">
+        <img src="4kg.png" alt="masuk ke /proc" style="max-width:350px;">
         <figcaption>Masuk ke /proc/sys/net/ipv4/ip_forward</figcaption>
       </figure>
     </li>
     <li>
       <figure>
-        <img src="media/image6.png" alt="ganti 0 ke 1" style="max-width:600px;">
+        <img src="5kg.png" alt="ganti 0 ke 1" style="max-width:600px;">
         <figcaption>Ganti dari 0 menjadi 1 untuk mengaktifkan routing NAT</figcaption>
       </figure>
     </li>
     <li>
       <p>Cek konfigurasi nat tadi, jika hasilnya 1 berarti berhasil dengan perintah :</p>
       <figure>
-        <img src="media/image7.png" alt="cat ip_forward" style="max-width:500px;">
+        <img src="6kg.png" alt="cat ip_forward" style="max-width:500px;">
         <figcaption>Hasil cat /proc/sys/net/ipv4/ip_forward = 1</figcaption>
       </figure>
     </li>
     <li>
       <p>Langkah-langkah di atas adalah routing. Agar IP private dapat terkoneksi dengan internet, maka diperlukan iptables firewall yang dapat mengarahkan dari ip publik ke ip private dengan cara routing NAT. Untuk setting firewall nat ada 2 cara yaitu permanen dan sementara, untuk yang sementara bisa menggunakan perintah :</p>
       <figure>
-        <img src="media/image8.png" alt="perintah iptables sementara" style="max-width:700px;">
+        <img src="7kg.png" alt="perintah iptables sementara" style="max-width:700px;">
         <figcaption>iptables -t nat -A POSTROUTING -o eth0 -j MASQUERADE</figcaption>
       </figure>
       <p>Keterangan : eth0 adalah sumber dari IP publiknya. Settingan firewall ini akan hilang apabila PC di restart, karena bersifat sementara.</p>
     </li>
     <li>
       <figure>
-        <img src="media/image9.png" alt="rc.local" style="max-width:600px;">
+        <img src="8kg.png" alt="rc.local" style="max-width:600px;">
         <figcaption>Untuk permanen bisa di setting pada file "rc.local" dan tambahkan syntax seperti pada settingan firewall nat sementara tadi</figcaption>
       </figure>
     </li>
     <li>
       <figure>
-        <img src="media/image10.png" alt="service rc.local" style="max-width:300px;">
+        <img src="9kg.png" alt="service rc.local" style="max-width:300px;">
         <figcaption>Jalankan service rc.local</figcaption>
       </figure>
     </li>
     <li>
       <figure>
-        <img src="media/image11.png" alt="tampilan service rc.local" style="max-width:600px;">
+        <img src="10kg.png" alt="tampilan service rc.local" style="max-width:600px;">
         <figcaption>Jika muncul tampilan pesan seperti gambar, maka konfigurasi rc.local berhasil</figcaption>
       </figure>
     </li>
     <li>
       <figure>
-        <img src="media/image12.png" alt="iptables -L -t nat" style="max-width:250px;">
+        <img src="11kg.png" alt="iptables -L -t nat" style="max-width:250px;">
         <figcaption>Untuk mengetahui konfigurasi NAT aktif, ketikkan perintah iptables -L -t nat</figcaption>
       </figure>
     </li>
     <li>
       <p>Jika sudah aktif pada layar console akan muncul tampilan berikut:</p>
       <figure>
-        <img src="media/image13.png" alt="tampilan iptables nat" style="max-width:400px;">
+        <img src="12kg.png" alt="tampilan iptables nat" style="max-width:400px;">
         <figcaption>Hasil iptables -t nat -L</figcaption>
       </figure>
     </li>
@@ -411,7 +411,7 @@ iptables --A INPUT --p tcp --j LOG --log-prefix "INPUT Packets"</pre>
   <ol>
     <li>
       <figure>
-        <img src="media/image14.png" alt="ping google dari server" style="max-width:500px;">
+        <img src="13kg.png" alt="ping google dari server" style="max-width:500px;">
         <figcaption>Lakukan pengujian dari server terlebih dahulu dengan ping google</figcaption>
       </figure>
     </li>
@@ -420,7 +420,7 @@ iptables --A INPUT --p tcp --j LOG --log-prefix "INPUT Packets"</pre>
     <li>
       <p>Untuk menguji internet gateway dari client jalankan web browser dari PC client (Windows XP). Isikan pada address bar alamat situs yang akan dipanggil, misalnya <a href="http://www.google.com" target="_blank">http://www.google.com</a>. Jika sudah ditampilkan seperti gambar berikut, maka konfigurasi internet gateway (NAT) yang dilakukan berhasil, sehingga client dapat mengakses internet dengan komputer debian server sebagai internet gateway.</p>
       <figure>
-        <img src="media/image15.jpeg" alt="browser google" style="max-width:400px;">
+        <img src="14kg" alt="browser google" style="max-width:400px;">
         <figcaption>Client berhasil mengakses google melalui gateway</figcaption>
       </figure>
       <figure>
